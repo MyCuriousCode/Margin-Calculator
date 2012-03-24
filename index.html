@@ -1,0 +1,221 @@
+<html>
+<head>
+	<title>Margin Calculator</title>
+ 	
+ 	<link rel="stylesheet" type="text/css" href="assests/index.css" />
+ 	<script type="text/javascript" src="assests/jquery-1.7.1.min.js"></script>
+ 	<!--- Le jQuery -->
+ 	<script type="text/javascript">                                         
+    	$(document).ready(function() {
+    		var numArray = [];
+    		var opArray = [];
+    		$(".resultContainer").hide();
+    		
+    		//$(".resultContainer").hide();
+    		
+   			$(".inputType").click(function () { 
+   				if($("#inputDisplay").val() != ""){
+   					numArray.push($("#inputDisplay").val());
+   					opArray.push($(this).val());
+   				}
+      			// Reset inputDisplay value
+      			$("#inputDisplay").val("")
+      			
+      			if(opArray.length == 2){
+      			   // show results
+      			   result(numArray,opArray);
+      			   // clear arrays
+      			   numArray = []
+      			   opArray = []
+      			}
+    		});
+    		
+    		$(".keypad").click(function () { 
+   				if($('.resultContainer').is(':visible')){
+   					$(".resultContainer").hide();
+   					$(".inputType").fadeIn("slow");
+   				}
+    		});
+    		
+    		
+    		function result(numArray,opArray){
+    			switch(opArray[0]){
+    				case "Buy Stock":
+    				if(opArray[1] == "Sell Stock"){
+    					var grossMargin = parseFloat((parseFloat(numArray[1])-parseFloat(numArray[0]))/parseFloat(numArray[1])*100);
+    					grossMargin = grossMargin.toFixed(2);
+    					var grossProfit = parseFloat(numArray[1])-parseFloat(numArray[0]);
+    					grossProfit = grossProfit.toFixed(2);
+    					var markup = parseFloat(numArray[1])/parseFloat(numArray[0]);
+    					markup = markup-1
+    					markup = markup * 100;
+    					markup = markup.toFixed(2);
+    					
+    					$("#1").html("<b>Gross Margin: </b>" + grossMargin + "%");
+    					$("#2").html("<b>Gross Profit: </b>" + "\u00A3" + grossProfit)
+    					$("#3").html("<b>Markup: </b>" + markup + "%");
+    				} else if(opArray[1] == "Profit Margin"){
+    					var sellingPrice = parseFloat(numArray[0])*parseFloat(1+numArray[1]/100);
+    					sellingPrice = sellingPrice.toFixed(2);
+    					var grossProfit = sellingPrice - parseFloat(numArray[0]);
+    					grossProfit = grossProfit.toFixed(2);
+    					var markup = sellingPrice/parseFloat(numArray[0]);
+    					markup = markup-1
+    					markup = markup * 100;
+    					markup = markup.toFixed(2);
+    					$('#1').html("<b>Selling Price: </b>" + "\u00A3" + sellingPrice);
+    					$("#2").html("<b>Gross Profit: </b>" + "\u00A3" + grossProfit)
+    					$("#3").html("<b>Markup: </b>" + markup + "%");
+    				}
+ 					break;
+ 					
+ 					case "Sell Stock":
+ 					if(opArray[1] == "Buy Stock"){
+ 						var grossMargin = parseFloat((parseFloat(numArray[0])-parseFloat(numArray[1]))/parseFloat(numArray[0])*100);
+    					grossMargin = grossMargin.toFixed(2);
+    					var grossProfit = parseFloat(numArray[0])-parseFloat(numArray[1]);
+    					grossProfit = grossProfit.toFixed(2);
+    					var markup = parseFloat(numArray[0])/parseFloat(numArray[1]);
+    					markup = markup-1
+    					markup = markup * 100;
+    					markup = markup.toFixed(2);
+    					$("#1").html("<b>Gross Margin: </b>" + grossMargin + "%");
+    					$("#2").html("<b>Gross Profit: </b>" + "\u00A3" + grossProfit)
+    					$("#3").html("<b>Markup: </b>" + markup + "%");
+					} else if(opArray[1] == "Profit Margin"){
+    					var buyPrice = parseFloat(numArray[0])*parseFloat(1-numArray[1]/100);
+    					buyPrice = buyPrice.toFixed(2);
+    					var grossProfit = parseFloat(numArray[0]) - buyPrice;
+    					grossProfit = grossProfit.toFixed(2);
+    					var markup = parseFloat(numArray[0])/buyPrice;
+    					markup = markup-1
+    					markup = markup * 100;
+    					markup = markup.toFixed(2);
+    					$('#1').html("<b>Buying Price: </b>" + "\u00A3" + buyPrice);
+    					$("#2").html("<b>Gross Profit: </b>" + "\u00A3" + grossProfit)
+    					$("#3").html("<b>Markup: </b>" + markup + "%");
+    				}
+    				break;
+    				
+    				case "Profit Margin":
+    				if(opArray[1] == "Buy Stock"){
+    					var sellingPrice = parseFloat(numArray[1])*parseFloat(1+numArray[0]/100);
+    					sellingPrice = sellingPrice.toFixed(2);
+    					var grossProfit = sellingPrice - parseFloat(numArray[1]);
+    					grossProfit = grossProfit.toFixed(2);
+    					var markup = sellingPrice/parseFloat(numArray[1]);
+    					markup = markup-1
+    					markup = markup * 100;
+    					markup = markup.toFixed(2);
+    					$('#1').html("<b>Selling Price: </b>" + "\u00A3" + sellingPrice);
+    					$("#2").html("<b>Gross Profit: </b>" + "\u00A3" + grossProfit)
+    					$("#3").html("<b>Markup: </b>" + markup + "%");
+    				} else if(opArray[1] == "Sell Stock"){
+    					var buyPrice = parseFloat(numArray[1])*parseFloat(1-numArray[0]/100);
+    					buyPrice = buyPrice.toFixed(2);
+    					
+    					var grossProfit = parseFloat(numArray[1]) - buyPrice;
+    					grossProfit = grossProfit.toFixed(2);
+    					var markup = parseFloat(numArray[1])/buyPrice;
+    					markup = markup-1
+    					markup = markup * 100;
+    					markup = markup.toFixed(2);
+    					
+    					$('#1').html("<b>Buying Price: </b>" + "\u00A3" + buyPrice);
+    					$("#2").html("<b>Gross Profit: </b>" + "\u00A3" + grossProfit)
+    					$("#3").html("<b>Markup: </b>" + markup + "%");
+    				}
+    				break;
+       			
+    			    }		
+    				$(".inputType").hide();
+    				$(".resultContainer").fadeIn("slow");	
+    		}
+ 		});	                               
+ 	</script>   
+ 	
+ 	
+</head>
+<body>
+	
+<div id="container">
+<span id="header">Margin<br/>Calculator</span>
+<form name="calculator">
+ 
+<!-- Display -->
+<input type="text" size="25" length="25" value="" name="ans" id="inputDisplay">
+
+ 
+<div id="calc">
+<table border="4" cellpadding="2" bordercolor="#FFFFFF" cellspacing="2" width="150" bgcolor="white">
+<tr>
+<td align="center">
+<input type="button" value="  7  " name="seven" onClick="document.calculator.ans.value+='7'" class="keypad">
+</td>
+<td align="center">
+<input type="button" value="  8  " name="eight" onClick="document.calculator.ans.value+='8'" class="keypad">
+</td>
+<td align="center">
+<input type="button" value="  9  " name="nine" onClick="document.calculator.ans.value+='9'" class="keypad">
+</td>
+<td align="center">
+<input type="button" value="  /  " name="divide" onClick="document.calculator.ans.value+='/'" class="keypad">
+</td>
+</tr>
+<tr>
+<td align="center">
+<input type="button" value="  4  " name="four" onClick="document.calculator.ans.value+='4'" class="keypad">
+</td>
+<td align="center">
+<input type="button" value="  5  " name="five" onClick="document.calculator.ans.value+='5'" class="keypad">
+</td>
+<td align="center">
+<input type="button" value="  6  " name="six" onClick="document.calculator.ans.value+='6'" class="keypad" >
+</td>
+<td align="center">
+<input type="button" value="  *  " name="multiply" onClick="document.calculator.ans.value+='*'" class="keypad">
+</td>
+</tr>
+<tr>
+<td align="center">
+<input type="button" value="  1  " name="one" onClick="document.calculator.ans.value+='1'" class="keypad">
+</td>
+<td align="center">
+<input type="button" value="  2  " name="two" onClick="document.calculator.ans.value+='2'" class="keypad">
+</td>
+<td align="center">
+<input type="button" value="  3  " name="three" onClick="document.calculator.ans.value+='3'" class="keypad">
+</td>
+<td align="center">
+<input type="button" value="  -  " name="subtract" onClick="document.calculator.ans.value+='-'" class="keypad">
+</td>
+</tr>
+<tr>
+<td align="center">
+<input type="button" value="  C  " name="clear" onClick="document.calculator.ans.value=''" class="keypad">
+</td>
+<td align="center">
+<input type="button" value="  0  " name="zero" onClick="document.calculator.ans.value+='0'" class="keypad">
+</td>
+<td align="center">
+<input type="button" value="  =  " name="equal" class="keypad"
+  onClick="document.calculator.ans.value=eval(document.calculator.ans.value)">
+</td>
+<td align="center">
+<input type="button" value="  +  " name="add" onClick="document.calculator.ans.value+='+'" class="keypad">
+</td>
+</tr>
+</table>
+</div>
+</form>
+<div class="resultContainer" id="1"><b>Gross Margin:</b></div>
+<div class="resultContainer" id="2"><b>Gross Profit:</b></div>
+<div class="resultContainer" id="3"><b>Markup:</b></div>
+<input type="button" id="inputButton" value="Buy Stock" class="inputType">
+<input type="button" id="inputButton" value="Sell Stock" class="inputType">
+<input type="button" id="inputButton" value="Profit Margin" class="inputType">
+
+
+</div>
+</body>
+</html>
