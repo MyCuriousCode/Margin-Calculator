@@ -11,30 +11,29 @@
     		var opArray = [];
     		$(".resultContainer").hide();
     		
-    		//$(".resultContainer").hide();
-    		
-   			$(".inputType").click(function () { 
-   				if($("#inputDisplay").val() != ""){
-   					numArray.push($("#inputDisplay").val());
-   					opArray.push($(this).val());
-   				}
-      			// Reset inputDisplay value
-      			$("#inputDisplay").val("")
+   		$(".inputType").click(function () { 
+   			if($("#inputDisplay").val() != ""){
+   				numArray.push($("#inputDisplay").val());
+   				opArray.push($(this).val());
+   			}
+      		
+      		// Reset inputDisplay value
+      		$("#inputDisplay").val("")
       			
-      			if(opArray.length == 2){
-      			   // show results
-      			   result(numArray,opArray);
-      			   // clear arrays
-      			   numArray = []
-      			   opArray = []
-      			}
+      		if(opArray.length == 2){
+      			// show results
+      			result(numArray,opArray);
+      			// clear arrays
+      			numArray = []
+      			opArray = []
+      		}
     		});
     		
     		$(".keypad").click(function () { 
-   				if($('.resultContainer').is(':visible')){
-   					$(".resultContainer").hide();
-   					$(".inputType").fadeIn("slow");
-   				}
+   			if($('.resultContainer').is(':visible')){
+   				$(".resultContainer").hide();
+   				$(".inputType").fadeIn("slow");
+   			}
     		});
     		
     		
